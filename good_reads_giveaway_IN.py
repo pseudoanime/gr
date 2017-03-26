@@ -22,26 +22,35 @@ try:
     pageNo = 1
     wd.get("https://www.goodreads.com/")
     wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
-    while True:
+        while True:
+        print bannedUrls
         if  (pageNo > 3):
-            break
-        isPresent = len(wd.find_elements_by_link_text("Enter Giveaway")) > 0
-        count = len(wd.find_elements_by_link_text("Enter Giveaway"))
-        print count
-        if (isPresent == True) :
-            wd.find_element_by_link_text("Enter Giveaway").click()
-            wd.find_element_by_id("addressSelect2781698").click()
-            if not wd.find_element_by_id("termsCheckBox").is_selected():
-                wd.find_element_by_id("termsCheckBox").click()
-            if wd.find_element_by_id("want_to_read").is_selected():
-                wd.find_element_by_id("want_to_read").click()
-            wd.find_element_by_id("giveawaySubmitButton").click()
-            if (count == 1) :
-                pageNo += 1
-            wd.get("https://www.goodreads.com/")
-            wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
+            wd.quit()
+        giveawayUrls = wd.find_elements_by_link_text("Enter Giveaway")
+        print len(giveawayUrls)
+        if len(giveawayUrls) == len(bannedUrls) :
+            bannedUrls = [];
+            pageNo +=1
+        elif len(giveawayUrls) > 0 :
+            for giveaway in giveawayUrls:
+                currentUrl = giveaway.get_attribute("href")
+                if not currentUrl in bannedUrls :
+                    giveaway.click()
+                    if (wd.current_url == "https://www.goodreads.com/giveaway") :
+                        print "error"
+                        bannedUrls.append(currentUrl)
+                        wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
+                        break
+                    else :
+                        wd.find_element_by_id("addressSelect2781698").click()
+                        if not wd.find_element_by_id("termsCheckBox").is_selected():
+                            wd.find_element_by_id("termsCheckBox").click()
+                        if wd.find_element_by_id("want_to_read").is_selected():
+                            wd.find_element_by_id("want_to_read").click()
+                        wd.find_element_by_id("giveawaySubmitButton").click()
+                        wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
+                        break
         else :
-            # print isPresent
             pageNo +=1
             wd.get("https://www.goodreads.com/")
             wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
