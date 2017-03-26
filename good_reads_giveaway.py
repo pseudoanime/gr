@@ -43,7 +43,7 @@ try:
                         wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
                         break
                     else :
-                        wd.find_element_by_id("addressSelect2781698").click()
+                        wd.find_element_by_id("addressSelect2578346").click()
                         if not wd.find_element_by_id("termsCheckBox").is_selected():
                             wd.find_element_by_id("termsCheckBox").click()
                         if wd.find_element_by_id("want_to_read").is_selected():

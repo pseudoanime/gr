@@ -26,11 +26,9 @@ try:
     wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
     while True:
         print bannedUrls
-        if  (pageNo > 4):
+        if  (pageNo > 3):
             wd.quit()
         giveawayUrls = wd.find_elements_by_link_text("Enter Giveaway")
-        # isPresent = len(wd.find_elements_by_link_text("Enter Giveaway")) > 0
-        # count = len(wd.find_elements_by_link_text("Enter Giveaway"))
         print len(giveawayUrls)
         if len(giveawayUrls) == len(bannedUrls) :
             bannedUrls = [];
@@ -55,7 +53,6 @@ try:
                         wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
                         break
         else :
-            # print isPresent
             pageNo +=1
             wd.get("https://www.goodreads.com/")
             wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
