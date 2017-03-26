@@ -3,6 +3,7 @@ import time
 
 from selenium import webdriver
 wd = webdriver.PhantomJS()
+# wd = webdriver.Chrome()
 wd.implicitly_wait(60)
 success = True
 
@@ -14,6 +15,7 @@ def is_alert_present(wd):
         return False
 
 try:
+    bannedUrls = []
     wd.get("https://www.goodreads.com/")
     wd.find_element_by_id("userSignInFormEmail").send_keys("luckilaxmi@gmail.com")
     wd.find_element_by_id("user_password").click()
@@ -22,8 +24,8 @@ try:
     wd.find_element_by_css_selector("input.gr-button.gr-button--dark").click()
     pageNo = 1
     wd.get("https://www.goodreads.com/")
-    wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
-        while True:
+    while True:
+        wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
         print bannedUrls
         if  (pageNo > 3):
             wd.quit()
@@ -40,7 +42,6 @@ try:
                     if (wd.current_url == "https://www.goodreads.com/giveaway") :
                         print "error"
                         bannedUrls.append(currentUrl)
-                        wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
                         break
                     else :
                         wd.find_element_by_id("addressSelect2578346").click()
@@ -49,12 +50,10 @@ try:
                         if wd.find_element_by_id("want_to_read").is_selected():
                             wd.find_element_by_id("want_to_read").click()
                         wd.find_element_by_id("giveawaySubmitButton").click()
-                        wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
                         break
         else :
             pageNo +=1
             wd.get("https://www.goodreads.com/")
-            wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
 finally:
     wd.quit()
     if not success:

@@ -2,6 +2,7 @@
 import time
 from selenium import webdriver
 wd = webdriver.PhantomJS()
+# wd = webdriver.Chrome()
 success = True
 wd.implicitly_wait(60)
 
@@ -13,6 +14,7 @@ def is_alert_present(wd):
         return False
 
 try:
+    bannedUrls = []
     wd.get("https://www.goodreads.com/")
     wd.find_element_by_id("userSignInFormEmail").send_keys("pseudoanime@gmail.com")
     wd.find_element_by_id("user_password").click()
@@ -22,8 +24,7 @@ try:
     pageNo = 1
     wd.get("https://www.goodreads.com/")
     wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
-        while True:
-        print bannedUrls
+    while True:
         if  (pageNo > 3):
             wd.quit()
         giveawayUrls = wd.find_elements_by_link_text("Enter Giveaway")

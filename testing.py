@@ -23,8 +23,9 @@ try:
     wd.find_element_by_css_selector("input.gr-button.gr-button--dark").click()
     pageNo = 3
     wd.get("https://www.goodreads.com/")
-    wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
+    
     while True:
+        wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
         print bannedUrls
         if  (pageNo > 3):
             wd.quit()
@@ -41,7 +42,6 @@ try:
                     if (wd.current_url == "https://www.goodreads.com/giveaway") :
                         print "error"
                         bannedUrls.append(currentUrl)
-                        wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
                         break
                     else :
                         wd.find_element_by_id("addressSelect2781698").click()
@@ -50,12 +50,10 @@ try:
                         if wd.find_element_by_id("want_to_read").is_selected():
                             wd.find_element_by_id("want_to_read").click()
                         wd.find_element_by_id("giveawaySubmitButton").click()
-                        wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
                         break
         else :
             pageNo +=1
             wd.get("https://www.goodreads.com/")
-            wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
 finally:
     wd.quit()
     if not success:
