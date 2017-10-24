@@ -3,7 +3,7 @@ import time
 
 from selenium import webdriver
 wd = webdriver.PhantomJS()
-# wd = webdriver.Chrome()
+wd = webdriver.Chrome()
 wd.implicitly_wait(60)
 success = True
 
@@ -26,11 +26,11 @@ try:
     wd.get("https://www.goodreads.com/")
     while True:
         wd.get("https://www.goodreads.com/giveaway?page=" + str(pageNo))
-        print bannedUrls
+        print("%s", bannedUrls)
         if  (pageNo > 3):
             wd.quit()
         giveawayUrls = wd.find_elements_by_link_text("Enter Giveaway")
-        print len(giveawayUrls)
+        print (len(giveawayUrls))
         if len(giveawayUrls) == len(bannedUrls) :
             bannedUrls = [];
             pageNo +=1
@@ -40,7 +40,7 @@ try:
                 if not currentUrl in bannedUrls :
                     giveaway.click()
                     if (wd.current_url == "https://www.goodreads.com/giveaway") :
-                        print "error"
+                        print("error")
                         bannedUrls.append(currentUrl)
                         break
                     else :
