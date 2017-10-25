@@ -9,7 +9,7 @@ import sys
 cause = sys.argv[1]
 
 wd = webdriver.PhantomJS()
-# wd = webdriver.Chrome()
+wd = webdriver.Chrome()
 wd.implicitly_wait(60)
 
 fake = Faker()
@@ -20,5 +20,6 @@ try:
     wd.get("http://"+ cause +".easysearch.org.uk/")
     wd.find_element_by_id("searchString").send_keys(fakesearch)
     wd.find_element_by_css_selector(".submit-btn").click()
+    time.sleep(2)
 finally:
     wd.quit()
